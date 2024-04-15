@@ -10,7 +10,7 @@
                 <?php  
                     /* Se non siamo loggati visualiziamo il link per il login */
                 ?>
-                    <a class="btn btn-danger" href="#">Login</a>
+                    <a class="btn btn-danger" href="./login.php">Login</a>
                 <?php  
                     /* se loggati visualizziamo il link per gestire i post */
                 ?>
