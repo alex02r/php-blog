@@ -13,6 +13,7 @@
     <title>Blog</title>
 </head>
 <body>
+    <?php include_once('./partials/templates/header.php'); ?>
     
 </body>
 </html>
