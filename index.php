@@ -13,7 +13,15 @@
     <title>Blog</title>
 </head>
 <body>
-    <?php include_once('./partials/templates/header.php'); ?>
+    <?php
+        session_start(); 
+        include_once('./partials/templates/header.php'); 
+        
+        if (isset($_GET['un']) && $_GET['un'] == 1) {
+            session_unset();
+            header('Location: index.php');
+        }
+    ?>
     
 </body>
 </html>

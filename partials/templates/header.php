@@ -7,12 +7,27 @@
             </div>
             <div class="col-6 col-md-8 text-end">
                 <!-- menu list -->
-                <?php  
-                    /* Se non siamo loggati visualiziamo il link per il login */
-                ?>
-                    <a class="btn btn-danger" href="#">Login</a>
-                <?php  
-                    /* se loggati visualizziamo il link per gestire i post */
+                <?php
+                    if (isset($_SESSION['user'])) {
+                        /* se loggati visualizziamo il link per gestire i post */
+                        ?>
+                        <ul class="list-unstyled d-flex justify-content-end align-items-center gap-5">
+                            <li>
+                                <a href="#" class="link-dark link-underline-opacity-0 link-underline-opacity-100-hover">MyPost</a>
+                            </li>
+                            <li>
+                                <!-- logout -->
+                               <a href="index.php?un=1" class="btn btn-sm btn-danger">LOGOUT</a> 
+                            </li>
+                        </ul>
+                        <?php
+                    }else{
+                        /* Se non siamo loggati visualiziamo il link per il login */
+                        ?>
+                            <a class="btn btn-danger" href="./login.php">Login</a>
+                        <?php  
+                    }
+                 
                 ?>
             </div>
         </div>
