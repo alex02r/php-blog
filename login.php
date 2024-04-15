@@ -13,29 +13,52 @@
 </head>
 <body>
     <?php 
+        session_start();
         include('./connection.php');
         //controlliamo se abbiamo inviato i dati
         if (isset($_POST['login'])) {
+            session_unset();
+            $username = $_POST['user'];
+            $password = $_POST['psw'];
             if (empty($_POST['user']) && empty($_POST['psw'])) {
                 $error = 'Inserisci username e password';
             }else{
-                
+                //prepariamo al query
+                $query = 'SELECT * FROM users WHERE username = ?';
+
+                $check = $db->prepare($query);
+                $check->bind_param('s', $username);
+                $check->execute();
+                $result = $check->get_result();
+
+                // Estrae l'utente dalla query risultante
+                $user = $result->fetch_assoc();
+
+                if (!$user || !password_verify($password, $user['password'])) {
+                    $_SESSION['error'] = 'Credenziali utente errate';
+                    header('Location: login.php');
+                } else {
+                    $_SESSION['user'] = $user;
+                    header('Location: index.php');
+                }
+
             }
-        }
+
+        }   
     ?>
     <div class="container my-5">
         <div class="row justify-content-center">
             <div class="col-6 col-md-4">
                 <div class="shadow rounded p-5">
                     <!-- form di login -->
-                    <form action="#" method="post">
+                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                         <h2>Login</h2>
                         <!-- controlliamo se sono presenti errori -->
                         <?php 
-                            if (isset($error)) {
+                            if (isset($_SESSION['error'])) {
                         ?>
                             <div class="alert text-danger">
-                                <?php $error ; ?>
+                                <?php echo $_SESSION['error'] ; ?>
                             </div>
                         <?php
                             }; 
