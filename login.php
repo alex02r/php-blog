@@ -12,6 +12,17 @@
     <title>Login</title>
 </head>
 <body>
+    <?php 
+        include('./connection.php');
+        //controlliamo se abbiamo inviato i dati
+        if (isset($_POST['login'])) {
+            if (empty($_POST['user']) && empty($_POST['psw'])) {
+                $error = 'Inserisci username e password';
+            }else{
+                
+            }
+        }
+    ?>
     <div class="container my-5">
         <div class="row justify-content-center">
             <div class="col-6 col-md-4">
@@ -19,16 +30,28 @@
                     <!-- form di login -->
                     <form action="#" method="post">
                         <h2>Login</h2>
+                        <!-- controlliamo se sono presenti errori -->
+                        <?php 
+                            if (isset($error)) {
+                        ?>
+                            <div class="alert text-danger">
+                                <?php $error ; ?>
+                            </div>
+                        <?php
+                            }; 
+                        ?>
+                        
                         <div class="mb-3">
                             <!-- user -->
                             <label for="user" class="form-label">Username</label>
-                            <input type="text" id="user" name="user" class="form-control">
+                            <input type="text" id="user" name="user" class="form-control" required>
                         </div>
                         <div class="mb-3">
                             <!-- password -->
                             <label for="psw" class="psw">Password</label>
-                            <input type="text" id="psw" name="psw" class="form-control">
+                            <input type="text" id="psw" name="psw" class="form-control" required>
                         </div>
+                        <button type="submit" class="btn btn-primary" name="login" id="login">Login</button>
                     </form>
                 </div>
             </div>
