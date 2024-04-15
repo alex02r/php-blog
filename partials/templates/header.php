@@ -7,8 +7,7 @@
             </div>
             <div class="col-6 col-md-8 text-end">
                 <!-- menu list -->
-                <?php  
-                session_start();
+                <?php
                     if (isset($_SESSION['user'])) {
                         /* se loggati visualizziamo il link per gestire i post */
                         ?>
@@ -17,7 +16,8 @@
                                 <a href="#" class="link-dark link-underline-opacity-0 link-underline-opacity-100-hover">MyPost</a>
                             </li>
                             <li>
-                               <a href="#" class="btn btn-sm btn-danger">LOGOUT</a> 
+                                <!-- logout -->
+                               <a href="index.php?un=1" class="btn btn-sm btn-danger">LOGOUT</a> 
                             </li>
                         </ul>
                         <?php
