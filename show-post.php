@@ -19,6 +19,21 @@
         session_start(); 
         include_once('./partials/templates/header.php'); 
     ?>
-    
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!-- visualizzazione immagine -->
+                <!-- titolo -->
+                <h2></h2>
+            </div>
+            <div class="col-12 col-md-6">
+                <!-- descrizione post -->
+                <p></p>
+            </div>
+            <div class="col-12 col-md-6">
+                <!-- spazio puiblicità -->
+            </div>
+        </div>
+    </div>
 </body>
 </html>
