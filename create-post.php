@@ -18,12 +18,13 @@
     <?php
         session_start(); 
         include_once('./partials/templates/header.php'); 
-        
-        if (isset($_GET['un']) && $_GET['un'] == 1) {
-            session_unset();
-            header('Location: index.php');
-        }
     ?>
-    
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12-col-md-8">
+                <!-- form di creazione del post -->
+            </div>
+        </div>
+    </div>
 </body>
 </html>

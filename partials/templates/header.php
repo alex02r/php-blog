@@ -13,7 +13,10 @@
                         ?>
                         <ul class="list-unstyled d-flex justify-content-end align-items-center gap-5">
                             <li>
-                                <a href="#" class="link-dark link-underline-opacity-0 link-underline-opacity-100-hover">MyPost</a>
+                                <a href="index.php" class="link-dark link-underline-opacity-0 link-underline-opacity-100-hover" >Home</a>
+                            </li>
+                            <li>
+                                <a href="MyPosts.php" class="link-dark link-underline-opacity-0 link-underline-opacity-100-hover">MyPosts</a>
                             </li>
                             <li>
                                 <!-- logout -->

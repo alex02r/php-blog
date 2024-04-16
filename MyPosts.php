@@ -17,13 +17,25 @@
 <body>
     <?php
         session_start(); 
-        include_once('./partials/templates/header.php'); 
-        
-        if (isset($_GET['un']) && $_GET['un'] == 1) {
-            session_unset();
-            header('Location: index.php');
+        //controlliamo se abbiamo l'accesso a questa pagina
+        if (!isset($_SESSION['user'])) {
+            header('Location: forbidden.php');
         }
+
+        include_once('./partials/templates/header.php'); 
     ?>
-    
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!-- img jumbo -->
+            </div>
+            <div class="col-12 text-end">
+                <a href="create-post.php" class="btn btn-sm btn-warning">Crea nuovo post <i class="fas fa-plus"></i></a>
+            </div>
+            <?php 
+                /* visualizzazione di tutti i post relativi all'utente */
+            ?>
+        </div>
+    </div>
 </body>
 </html>

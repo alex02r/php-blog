@@ -9,21 +9,19 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- favicon -->
     <link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
-    <!-- fontawesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <title>Blog</title>
 </head>
 <body>
-    <?php
-        session_start(); 
-        include_once('./partials/templates/header.php'); 
-        
-        if (isset($_GET['un']) && $_GET['un'] == 1) {
-            session_unset();
-            header('Location: index.php');
-        }
-    ?>
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6 text-center">
+                <h1>403</h1>
+                <h3>Forbidden</h3>
+                <h5>Access to this resorce on the server is denided!</h5>
+            </div>
+        </div>
+    </div>
     
 </body>
 </html>
