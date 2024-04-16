@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,18 +15,37 @@
 
     <title>Blog</title>
 </head>
+
 <body>
     <?php
-        session_start(); 
-        include_once('./partials/templates/header.php'); 
-        if
-        
+    session_start();
+    include_once('./partials/templates/header.php');
+    if (isset($_POST['newPost'])) {
+        $title = $_POST['title'];
+        $content = $_POST['content'];
+        if (empty($title) && empty($content)) {
+            $_SESSION['error'] = 'Devi inserire titolo e un contenuto';
+            header('Location: create-post.php');
+        }
+    }
+
     ?>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12-col-md-8">
+
                 <!-- form di creazione del post -->
-                <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                    <!-- Controllo variabile della form -->
+                    <?php
+                    if (isset($_SESSION['error'])) {
+                    ?>
+                        <div class="text-danger">
+                            <?php echo $_SESSION['error']; ?>
+                        </div>
+                    <?php
+                    }
+                    ?>
                     <!-- Titolo -->
                     <label for="title">Titolo</label>
                     <input type="text" name="title" id="title" required>
@@ -34,8 +54,10 @@
                     <input type="text" name="content" id="content" required>
                     <button type="submit" name="newPost" id="newPost">Crea post</button>
                 </form>
+
             </div>
         </div>
     </div>
 </body>
+
 </html>
