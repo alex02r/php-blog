@@ -20,12 +20,20 @@
     <?php
     session_start();
     include_once('./partials/templates/header.php');
+    include('./connection.php');
     if (isset($_POST['newPost'])) {
         $title = $_POST['title'];
         $content = $_POST['content'];
         if (empty($title) && empty($content)) {
             $_SESSION['error'] = 'Devi inserire titolo e un contenuto';
             header('Location: create-post.php');
+        }
+        else{
+            $query = "INSERT INTO posts (`title`, `content`, `user_id`, `created_at`, `updated_at`) 
+            VALUES ('$title', '$content', '{$_SESSION['user']['id']}', NOW(), NOW())";
+
+            $stmt = $db -> query($query);
+            header('Location: MyPosts.php');
         }
     }
 
@@ -48,7 +56,7 @@
                     ?>
                     <!-- Titolo -->
                     <label for="title">Titolo</label>
-                    <input type="text" name="title" id="title" required>
+                    <input type="text" name="title" id="title" required >
                     <!-- Contenuto -->
                     <label for="content">Descrizione</label>
                     <input type="text" name="content" id="content" required>
