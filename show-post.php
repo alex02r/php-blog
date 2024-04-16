@@ -30,7 +30,6 @@
             if ($stmt->execute()) {
                 $result = $stmt->get_result();
                 $post = $result->fetch_assoc();
-                var_dump($post);
             }else {
                 echo 'errre nell esecuzione della query: '.$stmt->error;
             }
@@ -38,16 +37,24 @@
             header('Location: forbidden.php');
         }
     ?>
-    <div class="container">
-        <div class="row">
+    <div class="container my-5">
+        <div class="row row-gap-4">
             <div class="col-12">
                 <!-- visualizzazione immagine -->
                 <!-- titolo -->
-                <h2></h2>
+                <h2><?php echo $post['title'] ; ?></h2>
             </div>
             <div class="col-12 col-md-6">
+                <?php
+                    if (isset($_SESSION['user']) && $post['user_id'] == $_SESSION['user']['id']) {
+                        //sei il titolare del post e poi modificarlo
+                        ?>
+                            <a href="" class="btn btn-sm btn-warning">Modifica <i class="fas fa-pen"></i></a>
+                        <?php
+                    }
+                ?>
                 <!-- descrizione post -->
-                <p></p>
+                <p><?php echo $post['content']; ?></p>
             </div>
             <div class="col-12 col-md-6">
                 <!-- spazio puiblicità -->
