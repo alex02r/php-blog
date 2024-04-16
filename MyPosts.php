@@ -28,9 +28,28 @@
 
     // Inclusione db
     include('./connection.php');
+
+    //controllo per l'eliminazione di un post
+    if (isset($_POST['delete'])) {
+        //recuperiamo l'id del post
+        $post_id = $_POST['post_id'];
+        //prepariamo la query
+        $query = 'DELETE FROM posts WHERE id = ?';
+        $stmt = $db->prepare($query);
+        $stmt->bind_param('i',$post_id);
+        
+        //eseguiamo la query
+        if ($stmt->execute()) {
+            $cookie_value = "Post eliminato con successo";
+        } else {
+            $cookie_value = "Errore durante l'eliminazione del post: " . $stmt->error;
+        }
+        $_SESSION['post_delete'] = $cookie_value;
+    }
+
     ?>
     <div class="container">
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-12">
                 <!-- img jumbo -->
             </div>
@@ -38,6 +57,12 @@
                 <a href="create-post.php" class="btn btn-sm btn-warning">Crea nuovo post <i class="fas fa-plus"></i></a>
             </div>
             <div class="col-8 text-center">
+                <?php
+                    if (isset($_SESSION['post_delete'])) {
+                        ?><div class="text-danger"><?php echo $_SESSION['post_delete'];?></div><?php
+                        unset($_SESSION['post_delete']);
+                    }
+                ?>
                 <table class="table table-striped">
                     <thead>
                         <th>
@@ -61,11 +86,17 @@
                                 <td>
                                     <?php echo $row['title']?>
                                 </td>
-                                <td >
-                                    <a href=""class="btn btn-sm btn-success"><i class="fa-solid fa-eye"></i></a>
-                                    <a href=""class="btn btn-sm btn-warning"><i class="fa-solid fa-pen"></i></a>
-                                    <a href=""class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></a>
-
+                                <td class="d-flex gap-2 justify-content-center">
+                                    <a href="show-post.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-success"><i class="fa-solid fa-eye"></i></a>
+                                    <!-- <a href="" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen"></i></a> -->
+                                    <form action="show-post.php?id=<?php echo $row['id'] ;?>" method="post">
+                                        <button type="submit" name="edit" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen"></i></button>
+                                    </form>
+                                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" onsubmit="return confirm('Sei sicuro di voler eliminare il post ?');">
+                                        <!-- campo nascosto per passare l'id del post-->
+                                        <input type="hidden" name="post_id" id="post_id" value="<?php echo $row['id'] ;?>">
+                                        <button class="btn btn-sm btn-danger" id="delete" name="delete"><i class="fa-solid fa-trash"></i></button>
+                                    </form>
                                 </td>
                             </tr>
                         <?php

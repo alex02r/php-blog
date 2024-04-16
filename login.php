@@ -23,8 +23,8 @@
             session_unset();
             $username = $_POST['user'];
             $password = $_POST['psw'];
-            if (empty($_POST['user']) && empty($_POST['psw'])) {
-                $error = 'Inserisci username e password';
+            if (empty($_POST['user']) || empty($_POST['psw'])) {
+                $_SESSION['error'] = 'Inserisci username e password';
             }else{
                 //prepariamo al query
                 $query = 'SELECT * FROM users WHERE username = ?';
