@@ -33,8 +33,9 @@
             $content = mysqli_real_escape_string($db, $content);
             $query = "INSERT INTO posts (`title`, `content`, `user_id`, `created_at`, `updated_at`) 
             VALUES ('$title', '$content', '{$_SESSION['user']['id']}', NOW(), NOW())";
+            $stmt = $db->prepare($query);
+            $stmt->execute();
 
-            $stmt = $db -> query($query);
             header('Location: MyPosts.php');
         }
     }
@@ -42,8 +43,7 @@
     ?>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-12-col-md-8">
-
+            <div class="col-12 col-md-8">
                 <!-- form di creazione del post -->
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <!-- Controllo variabile della form -->
