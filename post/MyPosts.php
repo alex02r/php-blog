@@ -22,7 +22,7 @@
             header('Location: forbidden.php');
         }
 
-        include_once('./partials/templates/header.php'); 
+        include_once('../partials/templates/header.php'); 
     ?>
     <div class="container">
         <div class="row">
@@ -30,7 +30,7 @@
                 <!-- img jumbo -->
             </div>
             <div class="col-12 text-end">
-                <a href="#" class="btn btn-warning">Crea nuovo post <i class="fas fa-plus"></i></a>
+                <a href="create-post.php" class="btn btn-sm btn-warning">Crea nuovo post <i class="fas fa-plus"></i></a>
             </div>
             <?php 
                 /* visualizzazione di tutti i post relativi all'utente */
