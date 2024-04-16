@@ -44,8 +44,7 @@
         }
         //controlliamo la modifca
         if (isset($_POST['edit'])) {
-            $_SESSION['edit'] = true; 
-            header('Location: show-post.php?id='.$_GET['id']);
+            header('Location: show-post.php?id='.$_GET['id'].'&edit=1');
             exit;
         }
 
@@ -62,7 +61,7 @@
         <div class="row row-gap-4 justify-content-center">
             <?php
                 //controlliamo se abbiamo cliccato la modifica
-                if (isset($_SESSION['edit'])) {
+                if (isset($_GET['edit']) && $_GET['edit'] == 1) {
                     ?>
                         <div class="col-12 col-md-6">
                             <h2>Modifica il post:</h2>
