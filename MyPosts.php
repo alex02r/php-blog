@@ -87,8 +87,8 @@
                                     <?php echo $row['title']?>
                                 </td>
                                 <td class="d-flex gap-2 justify-content-center">
-                                    <a href=""class="btn btn-sm btn-success"><i class="fa-solid fa-eye"></i></a>
-                                    <a href=""class="btn btn-sm btn-warning"><i class="fa-solid fa-pen"></i></a>
+                                    <a href="show-post.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-success"><i class="fa-solid fa-eye"></i></a>
+                                    <a href="" class="btn btn-sm btn-warning"><i class="fa-solid fa-pen"></i></a>
                                     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" onsubmit="return confirm('Sei sicuro di voler eliminare il post ?');">
                                         <!-- campo nascosto per passare l'id del post-->
                                         <input type="hidden" name="post_id" id="post_id" value="<?php echo $row['id'] ;?>">
