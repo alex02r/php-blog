@@ -47,12 +47,26 @@
             header('Location: show-post.php?id='.$_GET['id'].'&edit=1');
             exit;
         }
-
+        //controlliamo se abbiamo confermato la modifica
         if (isset($_POST['save'])) {
-            unset($_SESSION['edit']);
-            $id = $_POST['post_id'];
-            header('Location: show-post.php?id='.$id);
-            exit;    
+            //controllo che abbia inserito dei valori nei campi input
+            if (empty($_POST['title']) || empty($_POST['content'])) {
+                $_SESSION['error_edit'] = 'Devi compilare i campi titolo e descrizione';
+                header('Location: show-post.php?id='.$id.'&edit=1');
+                exit;
+            }else{
+                $id = $_POST['post_id'];
+                $title = $_POST['title'];
+                $content = $_POST['content'];
+                //prepariamo la query
+                $query = "UPDATE posts SET title = ? , content = ?, updated_at = NOW() WHERE id = ?";
+                $stmt = $db->prepare($query);
+                $stmt->bind_param('ssi', $title, $content, $id);
+                //eseguiamo la query 
+                $stmt->execute();
+                header('Location: show-post.php?id='.$id);
+                exit;    
+            }
         }
         
 
@@ -66,6 +80,12 @@
                         <div class="col-12 col-md-6">
                             <h2>Modifica il post:</h2>
                             <h2>"<?php echo $post['title']; ?>"</h2>
+                            <?php
+                                if (isset($_SESSION['error_edit'])) {
+                                    ?><div class="text-danger"><?php echo $_SESSION['error_edit'];?></div><?php
+                                    unset($_SESSION['error_edit']);
+                                }
+                            ?>
                             <form action="<?php echo $_SERVER["PHP_SELF"]."?".$_SERVER['QUERY_STRING']; ?>" method="POST">
                                 <div class="mb-3">
                                     <label for="title" class="form-label">Modifica il titolo: </label>
