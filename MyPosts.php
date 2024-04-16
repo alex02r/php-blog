@@ -14,12 +14,12 @@
 </head>
 <body>
     <?php
+        session_start(); 
         //controlliamo se abbiamo l'accesso a questa pagina
         if (!isset($_SESSION['user'])) {
             header('Location: forbidden.php');
         }
 
-        session_start(); 
         include_once('./partials/templates/header.php'); 
     ?>
     <div class="container">
