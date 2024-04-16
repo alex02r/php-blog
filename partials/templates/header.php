@@ -16,7 +16,7 @@
                                 <a href="index.php" class="link-dark link-underline-opacity-0 link-underline-opacity-100-hover" >Home</a>
                             </li>
                             <li>
-                                <a href="post/MyPosts.php" class="link-dark link-underline-opacity-0 link-underline-opacity-100-hover">MyPosts</a>
+                                <a href="MyPosts.php" class="link-dark link-underline-opacity-0 link-underline-opacity-100-hover">MyPosts</a>
                             </li>
                             <li>
                                 <!-- logout -->

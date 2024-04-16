@@ -22,7 +22,7 @@
             header('Location: forbidden.php');
         }
 
-        include_once('../partials/templates/header.php'); 
+        include_once('./partials/templates/header.php'); 
     ?>
     <div class="container">
         <div class="row">
