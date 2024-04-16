@@ -18,6 +18,25 @@
     <?php
         session_start(); 
         include_once('./partials/templates/header.php'); 
+        include('./connection.php');
+
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+            $query = 'SELECT * FROM posts WHERE id = ?';
+            $stmt = $db->prepare($query);
+            $stmt->bind_param('s', $id);
+
+            //controlliamo l'esecuizione della query
+            if ($stmt->execute()) {
+                $result = $stmt->get_result();
+                $post = $result->fetch_assoc();
+                var_dump($post);
+            }else {
+                echo 'errre nell esecuzione della query: '.$stmt->error;
+            }
+        }else {
+            header('Location: forbidden.php');
+        }
     ?>
     <div class="container">
         <div class="row">
