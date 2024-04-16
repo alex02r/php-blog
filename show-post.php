@@ -59,19 +59,21 @@
 
     ?>
     <div class="container my-5">
-        <div class="row row-gap-4">
+        <div class="row row-gap-4 justify-content-center">
             <?php
                 //controlliamo se abbiamo cliccato la modifica
                 if (isset($_SESSION['edit'])) {
                     ?>
                         <div class="col-12 col-md-6">
+                            <h2>Modifica il post:</h2>
+                            <h2>"<?php echo $post['title']; ?>"</h2>
                             <form action="<?php echo $_SERVER["PHP_SELF"]."?".$_SERVER['QUERY_STRING']; ?>" method="POST">
                                 <div class="mb-3">
-                                    <label for="title">Modifica il titolo: </label>
-                                    <input type="text" id="title" name="title" value="<?php echo $post['title']; ?>">
+                                    <label for="title" class="form-label">Modifica il titolo: </label>
+                                    <input type="text" id="title" name="title" class="form-control" value="<?php echo $post['title']; ?>">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="content">Modifica la descrizione: </label>
+                                    <label for="content" class="form-label">Modifica la descrizione: </label>
                                     <textarea id="content" name="content" class="form-control" cols="15" rows="5"><?php echo $post['content']; ?></textarea>
                                 </div>
                                 <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
