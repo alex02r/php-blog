@@ -30,7 +30,7 @@
     include('./connection.php');
     ?>
     <div class="container">
-        <div class="row">
+        <div class="row justify-content-center">
             <div class="col-12">
                 <!-- img jumbo -->
             </div>
@@ -64,8 +64,7 @@
                                 <td >
                                     <a href=""class="btn btn-sm btn-success"><i class="fa-solid fa-eye"></i></a>
                                     <a href=""class="btn btn-sm btn-warning"><i class="fa-solid fa-pen"></i></a>
-                                    <a href=""class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></a>
-
+                                    <a href=""class="btn btn-sm btn-danger" onclick="return confirm('Sei sicuro di voler eliminare il post ?');"><i class="fa-solid fa-trash"></i></a>
                                 </td>
                             </tr>
                         <?php
