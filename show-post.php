@@ -39,27 +39,52 @@
     ?>
     <div class="container my-5">
         <div class="row row-gap-4">
-            <div class="col-12">
-                <!-- visualizzazione immagine -->
-                <!-- titolo -->
-                <h2><?php echo $post['title'] ; ?></h2>
-            </div>
-            <div class="col-12 col-md-6">
-                <?php
-                    if (isset($_SESSION['user']) && $post['user_id'] == $_SESSION['user']['id']) {
-                        //sei il titolare del post e poi modificarlo
-                        ?>
-                            <a href="" class="btn btn-sm btn-warning">Modifica <i class="fas fa-pen"></i></a>
-                        <?php
-                    }
-                ?>
-                <!-- descrizione post -->
-                <p><?php echo $post['content']; ?></p>
-            </div>
-            <div class="col-12 col-md-6">
-                <!-- spazio puiblicità -->
-            </div>
+            <?php
+                //controlliamo se abbiamo cliccato la modifica
+                if (isset($_SESSION['edit'])) {
+                    ?>
+                        <div class="col-12 col-md-6">
+                            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                                <div class="mb-3">
+                                    <label for="title">Modifica il titolo: </label>
+                                    <input type="text" id="title" name="title" value="<?php echo $post['title']; ?>">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="content">Modifica la descrizione: </label>
+                                    <textarea id="content" name="content" class="form-control" cols="15" rows="5"><?php echo $post['content']; ?></textarea>
+                                </div>
+                                <button type="submit" id="edit" name="edit"  class="btn btn-sm btn-warning">Salva</button>
+                            </form>
+                        </div>
+                    <?php
+                }else {
+                    ?>
+                        <div class="col-12">
+                            <!-- visualizzazione immagine -->
+                            <!-- titolo -->
+                            <h2><?php echo $post['title'] ; ?></h2>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <?php
+                                if (isset($_SESSION['user']) && $post['user_id'] == $_SESSION['user']['id']) {
+                                    //sei il titolare del post e poi modificarlo
+                                    ?>
+                                        <button class="btn btn-sm btn-warning" onclick="<?php $_SESSION['edit'] = true; header('Location: show-post.php?id='.$post['id']);?>">Modifica <i class="fas fa-pen"></i></button>
+                                    <?php
+                                }
+                            ?>
+                            <!-- descrizione post -->
+                            <p><?php echo $post['content']; ?></p>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <!-- spazio puiblicità -->
+                        </div>
+                    <?php
+                }
+            ?>
+            
         </div>
+        
     </div>
 </body>
 </html>
