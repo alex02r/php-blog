@@ -18,11 +18,22 @@
     <?php
         session_start(); 
         include_once('./partials/templates/header.php'); 
+        if
+        
     ?>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12-col-md-8">
                 <!-- form di creazione del post -->
+                <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="post">
+                    <!-- Titolo -->
+                    <label for="title">Titolo</label>
+                    <input type="text" name="title" id="title" required>
+                    <!-- Contenuto -->
+                    <label for="content">Descrizione</label>
+                    <input type="text" name="content" id="content" required>
+                    <button type="submit" name="newPost" id="newPost">Crea post</button>
+                </form>
             </div>
         </div>
     </div>
