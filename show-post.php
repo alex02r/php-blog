@@ -45,7 +45,7 @@
         //controlliamo la modifca
         if (isset($_POST['edit'])) {
             $_SESSION['edit'] = true; 
-            header('Location: show-post.php?id='.$_POST['post_id']);
+            header('Location: show-post.php?id='.$_GET['id']);
             exit;
         }
 
