@@ -29,6 +29,8 @@
             header('Location: create-post.php');
         }
         else{
+            $title = mysqli_real_escape_string($db, $title);
+            $content = mysqli_real_escape_string($db, $content);
             $query = "INSERT INTO posts (`title`, `content`, `user_id`, `created_at`, `updated_at`) 
             VALUES ('$title', '$content', '{$_SESSION['user']['id']}', NOW(), NOW())";
 
