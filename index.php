@@ -26,7 +26,7 @@
         }
     ?>
     <div class="container">
-        <div class="row">
+        <div class="row row-gap-3">
             <div class="col-12">
                 <!-- img -->
             </div>
@@ -61,13 +61,21 @@
                 //eseguiamo la query
                 $stmt->execute();
                 //visualizziamo i posts
-                $result = $stmt->get_result(); 
-                while ($row = $result->fetch_assoc()) {
+                $results = $stmt->get_result(); 
+                if ($results->num_rows > 0) {
+                    while ($row = $results->fetch_assoc()) {
+                        ?>
+                            <div class="col-12 col-md-4 col-lg-3">
+                                <?php var_dump($row); ?>
+                            </div>
+                        <?php
+                    }
+                }else {
                     ?>
-                        <div class="col-12 col-md-4 col-lg-3">
-                            <?php var_dump($row); ?>
-                        </div>
-                    <?php
+                    <div class="col-12 text-center my-5">
+                        <h2>Non sono stati trovati post</h2>
+                    </div>
+                <?php
                 }
             ?>
 
