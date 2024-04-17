@@ -62,18 +62,19 @@
         //controlliamo se abbiamo confermato la modifica
         if (isset($_POST['save'])) {
             //controllo che abbia inserito dei valori nei campi input
-            if (empty($_POST['title']) || empty($_POST['content'])) {
-                $_SESSION['error_edit'] = 'Devi compilare i campi titolo e descrizione';
+            if (empty($_POST['title']) || empty($_POST['content']) || empty($_POST['category'])) {
+                $_SESSION['error_edit'] = 'Devi compilare i campi titolo, descrizione e categoria';
                 header('Location: show-post.php?id='.$id.'&edit=1');
                 exit;
             }else{
                 $id = $_POST['post_id'];
                 $title = $_POST['title'];
                 $content = $_POST['content'];
+                $category = $_POST['category'];
                 //prepariamo la query
-                $query = "UPDATE posts SET title = ? , content = ?, updated_at = NOW() WHERE id = ?";
+                $query = "UPDATE posts SET title = ? , content = ?, category_id= ?, updated_at = NOW() WHERE id = ?";
                 $stmt = $db->prepare($query);
-                $stmt->bind_param('ssi', $title, $content, $id);
+                $stmt->bind_param('ssii', $title, $content, $category_id, $id);
                 //eseguiamo la query 
                 $stmt->execute();
                 header('Location: show-post.php?id='.$id);
