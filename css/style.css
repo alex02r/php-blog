@@ -12,3 +12,10 @@
     object-fit: cover;
     height: 300px;
 }
+
+.truncate-text {
+    max-width: 300px; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
