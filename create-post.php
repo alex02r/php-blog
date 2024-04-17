@@ -26,16 +26,16 @@
     if (isset($_POST['newPost'])) {
         $title = $_POST['title'];
         $content = $_POST['content'];
-        if (empty($title) && empty($content)) {
-            $_SESSION['error'] = 'Devi inserire titolo e un contenuto';
+        $category = $_POST['category'];
+        if (empty($title) || empty($content) || empty($category)) {
+            $_SESSION['error'] = 'Devi inserire titolo, un contenuto e una categoria';
             header('Location: create-post.php');
         }
         else{
-            $title = mysqli_real_escape_string($db, $title);
-            $content = mysqli_real_escape_string($db, $content);
-            $query = "INSERT INTO posts (`title`, `content`, `user_id`, `created_at`, `updated_at`) 
-            VALUES ('$title', '$content', '{$_SESSION['user']['id']}', NOW(), NOW())";
+            $query = "INSERT INTO posts (`title`, `content`, `user_id`, `category_id`, `created_at`, `updated_at`) 
+            VALUES (?, ?, ?, ?, NOW(), NOW())";
             $stmt = $db->prepare($query);
+            $stmt->bind_param('ssii', $title, $content, $_SESSION['user']['id'], $category);
             $stmt->execute();
 
             header('Location: MyPosts.php');
@@ -71,8 +71,8 @@
                     </div>
                     <!-- Categoria -->
                     <div class="mb-3">
-                        <label for="categories">Seleziona la categoria: </label>
-                        <select name="categories[]" id="categories" class="form-select">
+                        <label for="category">Seleziona la categoria: </label>
+                        <select name="category" id="category" class="form-select" required>
                             <?php 
                                 //Selezione di tutte le categorie
                                 $query = 'SELECT * FROM categories';
