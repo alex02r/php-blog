@@ -74,7 +74,7 @@
                 //prepariamo la query
                 $query = "UPDATE posts SET title = ? , content = ?, category_id= ?, updated_at = NOW() WHERE id = ?";
                 $stmt = $db->prepare($query);
-                $stmt->bind_param('ssii', $title, $content, $category_id, $id);
+                $stmt->bind_param('ssii', $title, $content, $category, $id);
                 //eseguiamo la query 
                 $stmt->execute();
                 header('Location: show-post.php?id='.$id);
@@ -113,7 +113,7 @@
                                             $stmt = $db->query($query);
                                             while ($row = mysqli_fetch_array($stmt)) {
                                                 ?>
-                                                    <option value="<?php echo $row['id']; ?>" <?php if ($row['id'] == $cat['id']) echo "selected"; ?>><?php echo $row['name']; ?></option>
+                                                    <option value="<?php echo $row['id']; ?>" <?php if (!empty($cat['id']) && $row['id'] == $cat['id']) echo "selected"; ?>><?php echo $row['name']; ?></option>
                                                 <?php
                                             }
                                         ?>
@@ -136,9 +136,10 @@
                             <h2><?php echo $post['title'] ; ?></h2>
                             <!-- Categoria del post -->
                             <?php 
-                                
+                                if (isset($cat['name'])) {
+                                    ?><span class="badge text-bg-danger"><?php echo $cat['name']; ?></span><?php
+                                }
                             ?>
-                            <span class="badge text-bg-danger"><?php echo $cat['name']; ?></span>
                         </div>
                         <div class="col-12 col-md-6">
                             <?php
