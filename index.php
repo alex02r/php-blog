@@ -25,11 +25,16 @@
             header('Location: index.php');
         }
     ?>
-    <div class="container">
-        <div class="row row-gap-3">
+    <div class="container-fluid">
+        <div class="row">
             <div class="col-12">
                 <!-- img -->
+                <img src="./img/jumbo.jpg" alt="background" class="img-jumbo">
             </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row row-gap-3">
             <div class="col-12">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <button type="submit" class="btn btn-danger" name="filter" value="0">All</button>

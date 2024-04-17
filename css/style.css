@@ -6,3 +6,9 @@
     box-sizing: border-box;
     font-family: "Roboto", sans-serif;
 }
+
+.img-jumbo{
+    width: 100%;
+    object-fit: cover;
+    height: 300px;
+}
