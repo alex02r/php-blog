@@ -21,6 +21,8 @@
     session_start();
     include_once('./partials/templates/header.php');
     include('./connection.php');
+
+    //controller per la creazione di un post
     if (isset($_POST['newPost'])) {
         $title = $_POST['title'];
         $content = $_POST['content'];
@@ -41,9 +43,9 @@
     }
 
     ?>
-    <div class="container">
+    <div class="container my-5">
         <div class="row justify-content-center">
-            <div class="col-12 col-md-8">
+            <div class="col-12 col-md-6">
                 <!-- form di creazione del post -->
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <!-- Controllo variabile della form -->
@@ -57,12 +59,33 @@
                     }
                     ?>
                     <!-- Titolo -->
-                    <label for="title">Titolo</label>
-                    <input type="text" name="title" id="title" required >
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Titolo</label>
+                        <input type="text" name="title" id="title" class="form-control" required >
+                    </div>
                     <!-- Contenuto -->
-                    <label for="content">Descrizione</label>
-                    <input type="text" name="content" id="content" required>
-                    <button type="submit" name="newPost" id="newPost">Crea post</button>
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Descrizione</label>
+                        <textarea name="content" id="content" class="form-control" style="height: 100px;" required></textarea>
+                        <!-- <input type="text" name="content" id="content" class="form-control" required> -->
+                    </div>
+                    <!-- Categoria -->
+                    <div class="mb-3">
+                        <label for="categories">Seleziona la categoria: </label>
+                        <select name="categories[]" id="categories" class="form-select">
+                            <?php 
+                                //Selezione di tutte le categorie
+                                $query = 'SELECT * FROM categories';
+                                $stmt = $db->query($query);
+                                while ($row = mysqli_fetch_array($stmt)) {
+                                    ?>
+                                        <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></option>
+                                    <?php
+                                }
+                            ?>
+                        </select>
+                    </div>
+                    <button type="submit" name="newPost" id="newPost" class="btn btn-danger">Crea post</button>
                 </form>
 
             </div>
