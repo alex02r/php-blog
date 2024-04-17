@@ -106,6 +106,18 @@
                             <!-- visualizzazione immagine -->
                             <!-- titolo -->
                             <h2><?php echo $post['title'] ; ?></h2>
+                            <!-- Categoria del post -->
+                            <?php 
+                                //recuperiamo la categoria
+                                $query = 'SELECT * FROM categories WHERE id = ?';
+                                $stmt = $db->prepare($query);
+                                $stmt->bind_param('i', $post['category_id']);
+                                
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                $cat = $result->fetch_assoc();
+                            ?>
+                            <span class="badge text-bg-danger"><?php echo $cat['name']; ?></span>
                         </div>
                         <div class="col-12 col-md-6">
                             <?php
