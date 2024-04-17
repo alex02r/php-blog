@@ -132,14 +132,19 @@
                     ?>
                         <div class="col-12">
                             <!-- visualizzazione immagine -->
-                            <!-- titolo -->
-                            <h2><?php echo $post['title'] ; ?></h2>
-                            <!-- Categoria del post -->
-                            <?php 
-                                if (isset($cat['name'])) {
-                                    ?><span class="badge text-bg-danger"><?php echo $cat['name']; ?></span><?php
-                                }
-                            ?>
+                            <div class="position-relative">
+                                <img src="<?php echo empty($row['image']) ? 'https://www.trschools.com/templates/imgs/default_placeholder.png' : ''.$post['image']; ?>" class="img-jumbo" alt="<?php echo $post['title']; ?>">
+                                <div class="position-absolute bottom-0 start-0 translate-middle-y ms-4">
+                                    <!-- titolo -->
+                                    <h2><?php echo $post['title'] ; ?></h2>
+                                    <!-- Categoria del post -->
+                                    <?php 
+                                        if (isset($cat['name'])) {
+                                            ?><span class="badge text-bg-danger"><?php echo $cat['name']; ?></span><?php
+                                        }
+                                    ?>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-12 col-md-6">
                             <?php
