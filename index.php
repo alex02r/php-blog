@@ -44,6 +44,33 @@
                     ?>
                 </form>
             </div>
+            <?php
+                //Query di selezione
+                $query ='SELECT * FROM posts' ;
+                //controlliamo il filtro applicato
+                if(isset($_POST['filter']) && $_POST['filter'] != 0){
+                    //abbiamo selezionato un filtro
+                    $filter =  $_POST['filter'];
+                    $query .= ' WHERE category_id = ?';
+                    $stmt = $db->prepare($query);
+                    $stmt->bind_param('i', $filter);
+                }else{
+                    //selezioniamo tutti i posts
+                    $stmt = $db->prepare($query);
+                }
+                //eseguiamo la query
+                $stmt->execute();
+                //visualizziamo i posts
+                $result = $stmt->get_result(); 
+                while ($row = $result->fetch_assoc()) {
+                    ?>
+                        <div class="col-12 col-md-4 col-lg-3">
+                            <?php var_dump($row); ?>
+                        </div>
+                    <?php
+                }
+            ?>
+
         </div>
     </div>
 </body>
