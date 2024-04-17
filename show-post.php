@@ -41,6 +41,18 @@
             }else {
                 echo 'errre nell esecuzione della query: '.$stmt->error;
             }
+
+            //recuperiamo la categoria
+            $query = 'SELECT * FROM categories WHERE id = ?';
+            $stmt = $db->prepare($query);
+            $stmt->bind_param('i', $post['category_id']);
+
+            if ($stmt->execute()) {
+                $result = $stmt->get_result();
+                $cat = $result->fetch_assoc();
+            }else {
+                echo 'errre nell esecuzione della query: '.$stmt->error;
+            }
         }
         //controlliamo la modifca
         if (isset($_POST['edit'])) {
@@ -50,18 +62,19 @@
         //controlliamo se abbiamo confermato la modifica
         if (isset($_POST['save'])) {
             //controllo che abbia inserito dei valori nei campi input
-            if (empty($_POST['title']) || empty($_POST['content'])) {
-                $_SESSION['error_edit'] = 'Devi compilare i campi titolo e descrizione';
+            if (empty($_POST['title']) || empty($_POST['content']) || empty($_POST['category'])) {
+                $_SESSION['error_edit'] = 'Devi compilare i campi titolo, descrizione e categoria';
                 header('Location: show-post.php?id='.$id.'&edit=1');
                 exit;
             }else{
                 $id = $_POST['post_id'];
                 $title = $_POST['title'];
                 $content = $_POST['content'];
+                $category = $_POST['category'];
                 //prepariamo la query
-                $query = "UPDATE posts SET title = ? , content = ?, updated_at = NOW() WHERE id = ?";
+                $query = "UPDATE posts SET title = ? , content = ?, category_id= ?, updated_at = NOW() WHERE id = ?";
                 $stmt = $db->prepare($query);
-                $stmt->bind_param('ssi', $title, $content, $id);
+                $stmt->bind_param('ssii', $title, $content, $category, $id);
                 //eseguiamo la query 
                 $stmt->execute();
                 header('Location: show-post.php?id='.$id);
@@ -92,6 +105,21 @@
                                     <input type="text" id="title" name="title" class="form-control" value="<?php echo $post['title']; ?>">
                                 </div>
                                 <div class="mb-3">
+                                    <label for="category" class="form-label">Modifica la categoria: </label>
+                                    <select name="category" id="category" class="form-select" required>
+                                        <?php 
+                                            //Selezione di tutte le categorie
+                                            $query = 'SELECT * FROM categories';
+                                            $stmt = $db->query($query);
+                                            while ($row = mysqli_fetch_array($stmt)) {
+                                                ?>
+                                                    <option value="<?php echo $row['id']; ?>" <?php if (!empty($cat['id']) && $row['id'] == $cat['id']) echo "selected"; ?>><?php echo $row['name']; ?></option>
+                                                <?php
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
                                     <label for="content" class="form-label">Modifica la descrizione: </label>
                                     <textarea id="content" name="content" class="form-control" cols="15" rows="5"><?php echo $post['content']; ?></textarea>
                                 </div>
@@ -106,6 +134,12 @@
                             <!-- visualizzazione immagine -->
                             <!-- titolo -->
                             <h2><?php echo $post['title'] ; ?></h2>
+                            <!-- Categoria del post -->
+                            <?php 
+                                if (isset($cat['name'])) {
+                                    ?><span class="badge text-bg-danger"><?php echo $cat['name']; ?></span><?php
+                                }
+                            ?>
                         </div>
                         <div class="col-12 col-md-6">
                             <?php
