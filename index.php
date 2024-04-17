@@ -33,9 +33,9 @@
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container mb-5">
         <div class="row row-gap-3">
-            <div class="col-12">
+            <div class="col-12 text-center my-5">
                 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                     <button type="submit" class="btn btn-danger" name="filter" value="0">All</button>
                     <?php
@@ -71,7 +71,15 @@
                     while ($row = $results->fetch_assoc()) {
                         ?>
                             <div class="col-12 col-md-4 col-lg-3">
-                                <?php var_dump($row); ?>
+                                <div class="card text-bg-dark h-100">
+                                    <img src="<?php echo empty($row['image']) ? 'https://www.trschools.com/templates/imgs/default_placeholder.png' : ''.$row['image']; ?>" class="card-img opacity-50" alt="<?php echo $row['title']; ?>">
+                                    <div class="card-img-overlay">
+                                        <h5 class="card-title"><?php echo $row['title']; ?></h5>
+                                        <p class="card-text truncate-text"><?php echo $row['content']; ?></p>
+                                        <p class="card-text"><small>Last updated  <?php echo $row['updated_at']; ?></small></p>
+                                        <a href="show-post.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-danger">Visualizza</a>
+                                    </div>
+                                </div>
                             </div>
                         <?php
                     }
