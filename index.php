@@ -17,13 +17,82 @@
 <body>
     <?php
         session_start(); 
-        include_once('./partials/templates/header.php'); 
+        include_once('./partials/templates/header.php');
+        include('./connection.php'); 
         
         if (isset($_GET['un']) && $_GET['un'] == 1) {
             session_unset();
             header('Location: index.php');
         }
     ?>
-    
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- img -->
+                <img src="./img/jumbo.jpg" alt="background" class="img-jumbo">
+            </div>
+        </div>
+    </div>
+    <div class="container mb-5">
+        <div class="row row-gap-3">
+            <div class="col-12 text-center my-5">
+                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                    <button type="submit" class="btn btn-danger" name="filter" value="0">All</button>
+                    <?php
+                        $query = 'SELECT * FROM categories';
+                        $stmt = $db->query($query);
+                        while($row = mysqli_fetch_array($stmt)){
+                    ?>
+                        <button type="submit" class="btn btn-danger" name="filter" value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?></button>
+                    <?php 
+                        }
+                    ?>
+                </form>
+            </div>
+            <?php
+                //Query di selezione
+                $query ='SELECT * FROM posts' ;
+                //controlliamo il filtro applicato
+                if(isset($_POST['filter']) && $_POST['filter'] != 0){
+                    //abbiamo selezionato un filtro
+                    $filter =  $_POST['filter'];
+                    $query .= ' WHERE category_id = ?';
+                    $stmt = $db->prepare($query);
+                    $stmt->bind_param('i', $filter);
+                }else{
+                    //selezioniamo tutti i posts
+                    $stmt = $db->prepare($query);
+                }
+                //eseguiamo la query
+                $stmt->execute();
+                //visualizziamo i posts
+                $results = $stmt->get_result(); 
+                if ($results->num_rows > 0) {
+                    while ($row = $results->fetch_assoc()) {
+                        ?>
+                            <div class="col-12 col-md-4 col-lg-3">
+                                <div class="card text-bg-dark h-100">
+                                    <img src="<?php echo empty($row['image']) ? 'https://www.trschools.com/templates/imgs/default_placeholder.png' : ''.$row['image']; ?>" class="card-img opacity-50" alt="<?php echo $row['title']; ?>">
+                                    <div class="card-img-overlay">
+                                        <h5 class="card-title"><?php echo $row['title']; ?></h5>
+                                        <p class="card-text truncate-text"><?php echo $row['content']; ?></p>
+                                        <p class="card-text"><small>Last updated  <?php echo $row['updated_at']; ?></small></p>
+                                        <a href="show-post.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-danger">Visualizza</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php
+                    }
+                }else {
+                    ?>
+                    <div class="col-12 text-center my-5">
+                        <h2>Non sono stati trovati post</h2>
+                    </div>
+                <?php
+                }
+            ?>
+
+        </div>
+    </div>
 </body>
 </html>
